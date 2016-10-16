@@ -1,21 +1,36 @@
 {
   "name": "vaf",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "promise flux library for vue and react",
+  "author": {
+    "user": "jetiny",
+    "email": "86287344@qq.com"
+  },
   "main": "dist/vaf.js",
   "scripts": {
     "build:live": "rollup --watch -c build/rollup.config.js",
     "build:dev": "rollup -c build/rollup.config.js",
     "build:uglifyjs": "uglifyjs dist/vaf.js -cm --comments -o dist/vaf.min.js",
-    "release": "npm run build:dev && npm run build:uglifyjs",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "release": "npm run build:dev && npm run build:uglifyjs"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aflover/vaf.git"
   },
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "vue",
+    "vue2",
+    "electron",
+    "flux",
+    "react",
+    "react-native",
+    "vaf",
+    "lux",
+    "nw",
+    "vuex",
+    "vuejs"
+  ],
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/aflover/vaf/issues"
   },

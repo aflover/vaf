@@ -57,29 +57,27 @@ function initState({prop, emit, cloneThen, clone}) {
 	prop.val('getState', ()=> clone(state))
 
 	prop.val('replaceState', newState => {
-		let oldState = state
 		state = newState
 		cloneThen(newState).then(cloneState => {
 			emit('replace', cloneState)
 		})
 	})
 	
-	prop.val('updateState', (updateState, slice) => {
-		if (typeof updateState != 'object') {
+	prop.val('updateState', (changedState, slice) => {
+		if (typeof changedState != 'object') {
 			throw new Error('[flux] updateState require new state as object')
 		}
-		if (updateState != state) {
-			Object.keys(updateState).map(key => {
-				state[key] = updateState[key]
+		if (changedState != state) {
+			Object.keys(changedState).map(key => {
+				state[key] = changedState[key]
 			})
 		}
 		if (!slice) {
-			cloneThen(updateState).then(cloneState => {
+			cloneThen(changedState).then(cloneState => {
 				emit('update', cloneState)
 			})
 		}
 	})
-
 }
 
 function initCommit({prop, flux, updateState}) {
@@ -102,7 +100,7 @@ function initCommit({prop, flux, updateState}) {
 			if (typeof ret != 'object') {
 				throw new Error('[flux] commit require new object')
 			}
-			flux.updateState(ret)
+			updateState(ret)
 		}
 	}
 	prop.val('commit', proxyApi(commit))
@@ -152,7 +150,7 @@ function isPromiseLike(ret) {
 	return ret && ret.then
 }
 
-function initDeclare({prop, flux, emit}) {
+function initDeclare({prop, flux, emit, updateState}) {
 	let declare = (mod) => {
 		if (!mod)
 			return
@@ -169,7 +167,7 @@ function initDeclare({prop, flux, emit}) {
 			}
 		}
 		if (mod.state) {
-			flux.updateState(mod.state, true)
+			updateState(mod.state, true)
 		}
 		emit('declare', mod)
 	}
@@ -203,7 +201,6 @@ function initCloneThen({prop}) {
 	const channel = new MessageChannel()
 	let maps = {}, 
 		idx = 0, 
-		port1 = channel.port1 , 
 		port2 = channel.port2 
     port2.start()
     port2.onmessage = ({data: {key, value}}) => {
