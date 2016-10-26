@@ -8,7 +8,7 @@ function resetStoreVM (Vue, flux, vaf, state) {
     Vue.config.silent = true
     let vm = vaf.vm = new Vue({ data: {state} })
     flux.on('update', vaf.watch = (newState) => {
-        for (var key in newState) {
+        for (let key in newState) {
             vm.state[key] = newState[key]
         }
     })
@@ -47,10 +47,10 @@ FluxVue.install = function install(vue) {
 }
 
 export function mapGetters(getters) {
-    var res = {}
+    let res = {}
     normalizeMap(getters).forEach(function(ref) {
-        var key = ref.key;
-        var val = ref.val;
+        let key = ref.key;
+        let val = ref.val;
         res[key] = isFunction(val) ? function mappedGetter() { // function(state){}
             return val.call(this, this.$vaf.vm.state);
         } : function mappedGetter() {
@@ -61,10 +61,10 @@ export function mapGetters(getters) {
 }
 
 export function mapActions(actions) {
-    var res = {}
+    let res = {}
     normalizeMap(actions).forEach(function mappedAction(ref) {
-        var key = ref.key;
-        var val = ref.val;
+        let key = ref.key;
+        let val = ref.val;
         res[key] = function mappedAction(payload) {
             return this.$vaf.dispatch(val, payload);
         }

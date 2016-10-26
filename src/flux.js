@@ -87,7 +87,7 @@ function initCommit({prop, flux, updateState}) {
 			payload = type
 			type = type.type
 		}
-		var entry = _mutations[type];
+		let entry = _mutations[type];
 		if (!entry) {
 		    throw new Error("[flux] unknown mutation : " + type);
 		}
@@ -157,12 +157,12 @@ function initDeclare({prop, flux, emit, updateState}) {
 		if (Array.isArray(mod))
 			return mod.forEach(declare)
 		if (mod.mutations) {
-			for(var mutation in mod.mutations) {
+			for(let mutation in mod.mutations) {
 				flux._mutations[mutation] = mod.mutations[mutation]
 			}
 		}
 		if (mod.actions) {
-			for(var action in mod.actions) {
+			for(let action in mod.actions) {
 				flux._actions[action] = mod.actions[action]
 			}
 		}
