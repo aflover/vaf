@@ -6,7 +6,7 @@ export default {
 		todoList: [],
 	},
 	mutations: {
-		createNew ({todoList} = state, newItem) {
+		createNew ({todoList}, newItem) {
 			todoList.push(newItem)
 			return { todoList }
 		},

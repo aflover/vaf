@@ -30,13 +30,13 @@ npm i --save-dev vaf
             todoList: []
         },
         mutations: {
-            createNew ({todoList} = state, newItem) {
+            createNew ({todoList}, newItem) {
                 todoList.push(newItem)
                 return { todoList } // return updateState object if nessesary
             },
         },
         actions: {
-            createTodo ({resolve, commit} = flux, title) {
+            createTodo ({resolve, commit}, title) {
                 let newItem = {}
                 newItem.title = title
                 newItem.id = ++ _startIdx 
